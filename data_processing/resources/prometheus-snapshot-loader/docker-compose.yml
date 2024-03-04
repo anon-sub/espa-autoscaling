@@ -1,0 +1,16 @@
+version: '2.1'
+
+services:
+  prometheus:
+    image: prom/prometheus:v2.40.5
+    user: root
+    container_name: prometheus-snapshot-loader
+    volumes:
+      - ./etc/prometheus:/etc/prometheus
+      - ./prometheus:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
